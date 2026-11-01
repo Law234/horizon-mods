@@ -16,7 +16,7 @@ Every effect has a slider on the pack's Shader Options page (Sky and light, Effe
 
 ## Install
 
-1. Download [`lumen-0.1.0.hshader`](../lumen-0.1.0.hshader) (on its GitHub page, click the download button), or use this `lumen` folder as it is.
+1. Download [`lumen-0.2.0.hshader`](../lumen-0.2.0.hshader) (on its GitHub page, click the download button), or use this `lumen` folder as it is.
 2. In Horizon: Options > Horizon Settings > Shader Packs > Open Pack Folder, and put it there.
 3. Click **Lumen** on the Shader Packs page. Click it again to turn it off.
 

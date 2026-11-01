@@ -1,5 +1,5 @@
 // Bloom, step 2 (half resolution): blur step 1 up and down, a little wider.
-override bloom: f32 = 0.45;
+override bloom: f32 = 0.25;
 
 fn tap(uv: vec2<f32>) -> vec3<f32> {
     return textureSampleLevel(bloom_a, linear_sampler, uv, 0.0).rgb;
