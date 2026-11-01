@@ -29,6 +29,12 @@ output = "bloom_b"
 scale = 0.5
 
 [[post]]
+file = "post/shafts.wgsl"
+name = "Light shafts"
+output = "shafts"
+scale = 0.5
+
+[[post]]
 file = "post/final.wgsl"
 name = "Haze and grade"
 
@@ -36,8 +42,11 @@ name = "Haze and grade"
 resolution = 2048
 distance = 128.0
 
+[reflection]
+option = "reflections"
+
 [budget]
-gpu_ms = 3.0
+gpu_ms = 5.5
 
 # Coloured block light (only the colour; brightness stays vanilla's).
 [[lights]]
@@ -100,6 +109,16 @@ max = 1.0
 step = 0.05
 
 [[options]]
+id = "reflections"
+name = "Water reflections"
+description = "How strongly water open to the sky mirrors the world."
+type = "float"
+default = 0.8
+min = 0.0
+max = 1.0
+step = 0.05
+
+[[options]]
 id = "colored_lights"
 name = "Coloured lights"
 description = "How strongly torches, lanterns, lava and other lights tint what they light."
@@ -132,6 +151,16 @@ name = "Bloom"
 description = "The soft glow around bright things: the sun, lava, torches."
 type = "float"
 default = 0.25
+min = 0.0
+max = 1.0
+step = 0.05
+
+[[options]]
+id = "light_shafts"
+name = "Light shafts"
+description = "Sunlight streaming past trees and hills."
+type = "float"
+default = 0.5
 min = 0.0
 max = 1.0
 step = 0.05
@@ -210,13 +239,13 @@ items = ["page:sky_light", "page:effects", "page:colour", ""]
 id = "sky_light"
 name = "Sky and light"
 description = "The sky, moonlit nights, coloured block light and shining blocks."
-items = ["shadows", "sky_glow", "moonlight", "colored_lights", "emissive_glow", "wet_surfaces"]
+items = ["shadows", "reflections", "sky_glow", "moonlight", "colored_lights", "emissive_glow", "wet_surfaces", ""]
 
 [[pages]]
 id = "effects"
 name = "Effects"
 description = "Bloom, haze and film effects."
-items = ["bloom", "haze", "vignette", "grain", "letterbox", ""]
+items = ["bloom", "light_shafts", "haze", "vignette", "grain", "letterbox"]
 
 [[pages]]
 id = "colour"

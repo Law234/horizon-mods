@@ -3,6 +3,7 @@
 // contrast and saturation, a light vignette, and optional film grain and letterbox bars.
 override bloom: f32 = 0.25;
 override haze: f32 = 0.15;
+override light_shafts: f32 = 0.5;
 override moonlight: f32 = 0.5;
 override warmth: f32 = 0.3;
 override contrast: f32 = 1.05;
@@ -27,6 +28,15 @@ fn post(input: PostInput) -> vec4<f32> {
     // Bloom on lights.
     if bloom > 0.0 {
         c += textureSampleLevel(bloom_b, linear_sampler, uv, 0.0).rgb * bloom;
+    }
+
+    // Light shafts: the sun's colour, white-gold by day and orange when it is low, only out
+    // under a clear sky.
+    if light_shafts > 0.0 {
+        let rays = textureSampleLevel(shafts, linear_sampler, uv, 0.0).r;
+        let sun_colour = mix(vec3<f32>(1.0, 0.92, 0.75), vec3<f32>(1.0, 0.55, 0.25), sun_low());
+        let open_sky = daylight() * (1.0 - frame.rain) * frame.eye_light_smooth.y * select(0.0, 1.0, frame.eye_in == 0u);
+        c += sun_colour * rays * light_shafts * 0.45 * open_sky;
     }
 
     // Night outdoors: cool the shadows toward moonlit blue and lift them a little, so the

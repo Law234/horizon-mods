@@ -1,7 +1,8 @@
 // Block surfaces: real shade from the sun (and the moon at night) with warm sunlight and cool
 // shadows, a gentle colour from nearby lights, shining blocks kept bright so the bloom picks
-// them up, and darker ground open to the sky in rain.
+// them up, darker ground open to the sky in rain, and water that mirrors the world.
 override shadows: f32 = 0.6;
+override reflections: f32 = 0.8;
 override colored_lights: f32 = 0.35;
 override emissive_glow: f32 = 0.35;
 override wet_surfaces: bool = true;
@@ -68,5 +69,17 @@ fn material(input: MaterialInput) -> Surface {
     // Blocks that shine stay bright whatever the light around them.
     lit = mix(lit, albedo * input.tint.rgb, input.emission * emissive_glow);
 
-    return Surface(vec4<f32>(clamp(lit, vec3<f32>(0.0), vec3<f32>(1.0)), input.albedo.a));
+    // Water open to the sky mirrors the world, most at grazing angles (Fresnel), and grows
+    // more opaque where it does.
+    var alpha = input.albedo.a;
+    if reflections > 0.0 && input.fluid == 1u && input.face == 1u && frame.has_reflection == 1u {
+        let view = normalize(-input.position);
+        let fresnel = 0.02 + 0.98 * pow(1.0 - clamp(view.y, 0.0, 1.0), 5.0);
+        let mirror = textureSampleLevel(reflection, reflection_sampler, input.screen, 0.0).rgb;
+        let k = clamp(fresnel * reflections * input.light.y, 0.0, 0.9);
+        lit = mix(lit, mirror, k);
+        alpha = mix(alpha, 1.0, k);
+    }
+
+    return Surface(vec4<f32>(clamp(lit, vec3<f32>(0.0), vec3<f32>(1.0)), alpha));
 }
