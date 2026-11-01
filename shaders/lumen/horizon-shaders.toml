@@ -1,9 +1,9 @@
 schema = 1
 id = "lumen"
 name = "Lumen"
-version = "0.2.0"
+version = "0.3.0"
 api = "0.1"
-description = "A cinematic look: richer skies and sunsets, coloured torchlight, soft bloom, distant haze and a filmic colour grade."
+description = "A cinematic look that stays close to vanilla: richer skies and sunsets, deep blue nights, warm torchlight, bloom on real lights, distant haze and a gentle colour grade."
 authors = ["Law234"]
 license = "MIT"
 shared = ["common.wgsl"]
@@ -37,7 +37,7 @@ gpu_ms = 1.5
 
 # Coloured block light (only the colour; brightness stays vanilla's).
 [[lights]]
-color = [1.0, 0.68, 0.38]
+color = [1.0, 0.82, 0.62]
 blocks = ["torch", "wall_torch", "lantern", "campfire", "jack_o_lantern", "candle"]
 
 [[lights]]
@@ -69,6 +69,16 @@ blocks = ["amethyst_cluster", "crying_obsidian", "verdant_froglight"]
 id = "sky_glow"
 name = "Sunset glow"
 description = "How warm and colourful the sky gets around sunrise, sunset and at night."
+type = "float"
+default = 0.5
+min = 0.0
+max = 1.0
+step = 0.05
+
+[[options]]
+id = "moonlight"
+name = "Moonlight"
+description = "How blue, and how much less black, the shadows get outdoors at night."
 type = "float"
 default = 0.5
 min = 0.0
@@ -155,7 +165,7 @@ id = "vignette"
 name = "Vignette"
 description = "Darkens the corners of the screen."
 type = "float"
-default = 0.2
+default = 0.12
 min = 0.0
 max = 0.8
 step = 0.05
@@ -185,8 +195,8 @@ items = ["page:sky_light", "page:effects", "page:colour", ""]
 [[pages]]
 id = "sky_light"
 name = "Sky and light"
-description = "The sky, coloured block light and shining blocks."
-items = ["sky_glow", "colored_lights", "emissive_glow", "wet_surfaces"]
+description = "The sky, moonlit nights, coloured block light and shining blocks."
+items = ["sky_glow", "moonlight", "colored_lights", "emissive_glow", "wet_surfaces", ""]
 
 [[pages]]
 id = "effects"

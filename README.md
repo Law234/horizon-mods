@@ -5,6 +5,6 @@ Minecraft: Java Edition.
 
 | Name | Kind | What it does |
 |---|---|---|
-| [Lumen](shaders/lumen) | Shader pack | Cinematic skies, coloured torchlight, bloom, haze and a filmic colour grade |
+| [Lumen](shaders/lumen) | Shader pack | Vanilla, just nicer: richer sunsets, blue moonlit nights, warm torchlight, bloom on real lights and a gentle grade |
 
 Not an official Minecraft or Horizon product.
