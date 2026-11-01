@@ -1,0 +1,201 @@
+schema = 1
+id = "lumen"
+name = "Lumen"
+version = "0.1.0"
+api = "0.1"
+description = "A cinematic look: richer skies and sunsets, coloured torchlight, soft bloom, distant haze and a filmic colour grade."
+authors = ["Law234"]
+license = "MIT"
+shared = ["common.wgsl"]
+
+[sky]
+file = "sky.wgsl"
+name = "Sky"
+
+[material]
+file = "material.wgsl"
+name = "Surfaces"
+
+[[post]]
+file = "post/bloom_extract.wgsl"
+name = "Bloom (extract)"
+output = "bloom_a"
+scale = 0.5
+
+[[post]]
+file = "post/bloom_blur.wgsl"
+name = "Bloom (blur)"
+output = "bloom_b"
+scale = 0.5
+
+[[post]]
+file = "post/final.wgsl"
+name = "Haze and grade"
+
+[budget]
+gpu_ms = 1.5
+
+# Coloured block light (only the colour; brightness stays vanilla's).
+[[lights]]
+color = [1.0, 0.68, 0.38]
+blocks = ["torch", "wall_torch", "lantern", "campfire", "jack_o_lantern", "candle"]
+
+[[lights]]
+color = [0.35, 0.72, 1.0]
+blocks = ["soul_torch", "soul_wall_torch", "soul_lantern", "soul_campfire"]
+
+[[lights]]
+color = [1.0, 0.25, 0.15]
+blocks = ["redstone_torch", "redstone_wall_torch", "redstone_lamp"]
+
+[[lights]]
+color = [1.0, 0.45, 0.15]
+blocks = ["lava", "magma_block", "fire"]
+
+[[lights]]
+color = [1.0, 0.85, 0.55]
+blocks = ["glowstone", "shroomlight", "ochre_froglight"]
+
+[[lights]]
+color = [0.75, 0.92, 1.0]
+blocks = ["sea_lantern", "end_rod", "beacon", "pearlescent_froglight"]
+
+[[lights]]
+color = [0.7, 0.4, 1.0]
+blocks = ["amethyst_cluster", "crying_obsidian", "verdant_froglight"]
+
+# Options
+[[options]]
+id = "sky_glow"
+name = "Sunset glow"
+description = "How warm and colourful the sky gets around sunrise, sunset and at night."
+type = "float"
+default = 0.7
+min = 0.0
+max = 1.0
+step = 0.05
+
+[[options]]
+id = "colored_lights"
+name = "Coloured lights"
+description = "How strongly torches, lanterns, lava and other lights tint what they light."
+type = "float"
+default = 0.75
+min = 0.0
+max = 1.0
+step = 0.05
+
+[[options]]
+id = "emissive_glow"
+name = "Glowing blocks"
+description = "Keeps lava, glowstone and other shining blocks bright in the dark."
+type = "float"
+default = 0.6
+min = 0.0
+max = 1.0
+step = 0.05
+
+[[options]]
+id = "wet_surfaces"
+name = "Wet surfaces"
+description = "Ground open to the sky looks wet while it rains."
+type = "bool"
+default = true
+
+[[options]]
+id = "bloom"
+name = "Bloom"
+description = "The soft glow around bright things: the sun, lava, torches."
+type = "float"
+default = 0.45
+min = 0.0
+max = 1.0
+step = 0.05
+
+[[options]]
+id = "haze"
+name = "Distant haze"
+description = "Far land fades softly into the air."
+type = "float"
+default = 0.35
+min = 0.0
+max = 1.0
+step = 0.05
+
+[[options]]
+id = "warmth"
+name = "Warmth"
+description = "Golden light at sunrise and sunset, warm highlights and cool shadows."
+type = "float"
+default = 0.5
+min = 0.0
+max = 1.0
+step = 0.05
+
+[[options]]
+id = "contrast"
+name = "Contrast"
+type = "float"
+default = 1.1
+min = 0.8
+max = 1.5
+step = 0.05
+
+[[options]]
+id = "saturation"
+name = "Saturation"
+type = "float"
+default = 1.12
+min = 0.0
+max = 2.0
+step = 0.02
+
+[[options]]
+id = "vignette"
+name = "Vignette"
+description = "Darkens the corners of the screen."
+type = "float"
+default = 0.3
+min = 0.0
+max = 0.8
+step = 0.05
+
+[[options]]
+id = "grain"
+name = "Film grain"
+type = "float"
+default = 0.02
+min = 0.0
+max = 0.1
+step = 0.01
+
+[[options]]
+id = "letterbox"
+name = "Letterbox bars"
+description = "Black bars at the top and bottom for a widescreen film look."
+type = "bool"
+default = false
+
+# Settings pages
+[[pages]]
+id = "main"
+name = "Lumen"
+items = ["page:sky_light", "page:effects", "page:colour", ""]
+
+[[pages]]
+id = "sky_light"
+name = "Sky and light"
+description = "The sky, coloured block light and shining blocks."
+items = ["sky_glow", "colored_lights", "emissive_glow", "wet_surfaces"]
+
+[[pages]]
+id = "effects"
+name = "Effects"
+description = "Bloom, haze and film effects."
+items = ["bloom", "haze", "vignette", "grain", "letterbox", ""]
+
+[[pages]]
+id = "colour"
+name = "Colour"
+description = "The colour grade."
+items = ["warmth", "contrast", "saturation", ""]

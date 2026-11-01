@@ -1,0 +1,4 @@
+*.hshader
+*.hmod
+*.hnmod
+target/
